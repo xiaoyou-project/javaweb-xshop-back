@@ -1,0 +1,35 @@
+spring:
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/javawebks?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: root
+    password: 123456
+    platform: mysql
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 初始化大小，最小，最大
+    initialSize: 1
+    minIdle: 3
+    maxActive: 20
+    # 配置获取连接等待超时的时间
+    maxWait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 30000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    # 是否缓存preparedStatement，打开PSCache，并且指定每个连接上PSCache的大小。官方建议MySQL下建议关闭，如果用SQL防火墙 建议打开
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+mybatis:
+  #  配置要扫描的JavaBean
+  type-aliases-package: com.javaweb.ks.model
+  #  配置到时候要扫描的mapper文件
+  mapper-locations: classpath:/mybatis-mappers/*
+  configuration:
+    #    开启支持驼峰命名
+    map-underscore-to-camel-case: true
