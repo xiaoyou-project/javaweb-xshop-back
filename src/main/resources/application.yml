@@ -1,6 +1,6 @@
 server:
   #端口号
-  port: 8080
+  port: 2333
 spring:
   profiles:
     active: dev
