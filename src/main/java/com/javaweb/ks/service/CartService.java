@@ -12,4 +12,7 @@ public interface CartService {
 
     // 删除用户购物车的商品
     Results deleteCart(int cartID);
+
+    // 修改商品数量
+    Results changeCartNum(int shopID, int id, int number);
 }

@@ -5,12 +5,10 @@ import com.javaweb.ks.result.Results;
 import com.javaweb.ks.service.CartService;
 import com.javaweb.ks.util.TokenVerify;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.io.ResolverUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @Slf4j
@@ -26,7 +24,7 @@ public class CartController {
     //加入购物车（相当于修改用户商品数量）number为1则加1,为-1则减一
     @PostMapping("/addCart")
     @ResponseBody
-    public Results addCart(int shopID, int ID, String token, int number){
+    public Results addCart(@RequestParam("shopID") int shopID, @RequestParam("ID") int ID, @RequestParam("token") String token,@RequestParam("number") int number){
         return cartService.addCart(shopID, ID, token, number);
     }
 
@@ -42,11 +40,22 @@ public class CartController {
     }
 
     // 删除用户购物车的商品
-    @GetMapping("/deleteCart")
+    @PostMapping("/deleteCart")
     @ResponseBody
     public Results deleteCart(int cartID, int userID, String token){
         if(tokenVerify.tokenVerify(userID, token)){
             return cartService.deleteCart(cartID);
+        }else {
+            return new Results(0, "非法访问");
+        }
+    }
+
+    // 修改购物车商品数量
+    @PostMapping("/changeCartNum")
+    @ResponseBody
+    public Results changeCartNum(@RequestParam("shopID") int shopID, @RequestParam("ID") int ID, @RequestParam("token") String token,@RequestParam("number") int number){
+        if(tokenVerify.tokenVerify(ID, token)){
+            return cartService.changeCartNum(shopID, ID, number);
         }else {
             return new Results(0, "非法访问");
         }

@@ -25,6 +25,7 @@ public class ShopController {
     @GetMapping("/getInfo")
     @ResponseBody
     public Results getInfo(int shopID){
+        log.info("商品id" + shopID);
         return shopService.getShopInfo(shopID);
     }
 

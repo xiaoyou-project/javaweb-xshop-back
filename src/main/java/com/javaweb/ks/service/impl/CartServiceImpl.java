@@ -1,6 +1,7 @@
 package com.javaweb.ks.service.impl;
 
 import com.javaweb.ks.dao.CartDao;
+import com.javaweb.ks.dto.ShopCart;
 import com.javaweb.ks.model.Cart;
 import com.javaweb.ks.result.Results;
 import com.javaweb.ks.service.CartService;
@@ -39,12 +40,12 @@ public class CartServiceImpl implements CartService {
         if (tokenVerify.tokenVerify(id, token)) { // token对了
             int flag = 0;// 为0表示没有这个商品
             // 先获取用户的购物车
-            List<Cart> userCarts = cartDao.getCartsByUserID(id);
+            List<ShopCart> userCarts = cartDao.getCartsByUserID(id);
             // 循环遍历这个List集合看里面有没有这个shopID的商品
-            for (Cart cart : userCarts) {
+            for (ShopCart cart : userCarts) {
                 if (cart.getShopId() == shopID) { // 有这个商品
                     // 修改商品的数量
-                    cartDao.changeShopNum(cart.getID(), number == 1 ? (cart.getCount() + 1) : (cart.getCount() - 1));
+                    cartDao.changeShopNum(cart.getCartId(), number == 1 ? (cart.getCount() + 1) : (cart.getCount() - 1));
                     flag = 1;
                     break;
                 }
@@ -70,6 +71,13 @@ public class CartServiceImpl implements CartService {
     @Override
     public Results deleteCart(int cartID) {
         cartDao.deleteCartByC(cartID);
-        return null;
+        return new Results(1, "删除成功");
+    }
+
+    // 修改商品数量
+    @Override
+    public Results changeCartNum(int shopID, int id, int number) {
+        cartDao.changeCartNum(shopID, id, number);
+        return new Results(1, "修改商品数量成功");
     }
 }
