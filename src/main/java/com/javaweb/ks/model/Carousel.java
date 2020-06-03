@@ -3,7 +3,7 @@ package com.javaweb.ks.model;
 import lombok.Data;
 
 @Data
-public class carousel {
+public class Carousel {
 
     private int ID;
     private int sort;

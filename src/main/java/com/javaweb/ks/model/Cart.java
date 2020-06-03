@@ -3,7 +3,7 @@ package com.javaweb.ks.model;
 import lombok.Data;
 
 @Data
-public class cart {
+public class Cart {
 
     private int ID;
     private int userId;
