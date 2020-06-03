@@ -20,6 +20,7 @@ public class ShopController {
     @Autowired
     private ShopService shopService;
 
+
     //获取商品详情信息
     @GetMapping("/getInfo")
     @ResponseBody
@@ -27,6 +28,24 @@ public class ShopController {
         return shopService.getShopInfo(shopID);
     }
 
+    // 获取所有商品信息
+    @GetMapping("/getAllShop")
+    @ResponseBody
+    public Results getAllShop(){
+        return shopService.getAllShop();
+    }
+    // 获取某种类型商品的列表页面
+    @GetMapping("/getShopList")
+    @ResponseBody
+    public Results getShopList(int type){
+        return shopService.getShopList(type);
+    }
 
+    // 通过商品名字模糊查询
+    @GetMapping("/search")
+    @ResponseBody
+    public Results search(String key){
+        return shopService.searchShop(key);
+    }
 
 }

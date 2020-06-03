@@ -1,3 +1,6 @@
+server:
+  #端口号
+  port: 8080
 spring:
   profiles:
     active: dev
@@ -33,3 +36,7 @@ mybatis:
   configuration:
     #    开启支持驼峰命名
     map-underscore-to-camel-case: true
+# 配置输出sql查询语句
+logging:
+  level:
+    com.javaweb.ks.dao: debug

@@ -5,10 +5,16 @@ import com.javaweb.ks.model.Cart;
 import com.javaweb.ks.result.Results;
 import com.javaweb.ks.service.CartService;
 import com.javaweb.ks.util.TokenVerify;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Service
+@Transactional
+@Slf4j
 public class CartServiceImpl implements CartService {
 
     @Autowired
@@ -16,8 +22,6 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     private TokenVerify tokenVerify;
-
-
 
     // 加入购物车（相当于修改用户商品数量）number为1则加1,为-1则减一
     /**
@@ -54,5 +58,18 @@ public class CartServiceImpl implements CartService {
         }else {
             return new Results(0, "非法访问");
         }
+    }
+
+    // 获取用户购物车
+    @Override
+    public Results getUserCartsByUserId(int userID) {
+        return new Results(1, "获取成功", cartDao.getCartsByUserID(userID));
+    }
+
+    // 删除用户购物车的商品
+    @Override
+    public Results deleteCart(int cartID) {
+        cartDao.deleteCartByC(cartID);
+        return null;
     }
 }
