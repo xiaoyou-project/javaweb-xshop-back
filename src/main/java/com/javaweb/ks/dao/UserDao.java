@@ -20,7 +20,7 @@ public interface UserDao {
     int getUserByUsername(String username);
 
     // 用户注册，插入用户
-    @Insert("insert into user(username, password, nickname) values(#{username}, #{password}, #{nickname})")
+    @Insert("insert into user(username, password, nickname, site) values(#{username}, #{password}, #{nickname}, '中国')")
     int registerUser(String username, String password, String nickname);
 
     // 用户登录功能
@@ -58,4 +58,8 @@ public interface UserDao {
     // 修改用户密码
     @Update("update user set password = #{crypt} where ID = #{id}")
     void changePassword(int id, String crypt);
+
+    // 获取用户地址
+    @Select("select site from user where ID = #{userID} ")
+    String getUserSite(int userID);
 }

@@ -102,4 +102,10 @@ public class UserServiceImpl implements UserService {
             return new Results(0, "非法访问");
         }
     }
+
+    // 获取用户地址
+    @Override
+    public Results getUserSite(int userID) {
+        return new Results(1, "获取地址成功", userDao.getUserSite(userID));
+    }
 }

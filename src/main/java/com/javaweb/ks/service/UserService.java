@@ -22,4 +22,7 @@ public interface UserService {
 
     // 修改用户密码
     Results changePassword(int id, String token, String oldPassword, String password);
+
+    // 获取用户地址
+    Results getUserSite(int userID);
 }
