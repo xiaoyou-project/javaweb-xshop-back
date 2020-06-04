@@ -1,5 +1,6 @@
 package com.javaweb.ks.dao;
 
+import com.javaweb.ks.model.Carousel;
 import com.javaweb.ks.model.Cart;
 import com.javaweb.ks.model.Shop;
 import org.apache.ibatis.annotations.Mapper;
@@ -26,4 +27,8 @@ public interface ShopDao {
     // 通过商品名字模糊查询
     @Select("select * from shop where name like '%${key}%'")
     List<Shop> searchShopByShopName(String key);
+
+    // 获取某种商品列表的最上面的轮播图
+    @Select("select * from carousel where sort = #{type} ")
+    List<Carousel> getCarouselList(int type);
 }
