@@ -54,7 +54,7 @@ public class CartServiceImpl implements CartService {
                 return new Results(1, "修改商品数量成功");
             } else { // 添加购物车
                 cartDao.addCart(shopID, id, number);
-                return null;
+                return new Results(1, "添加成功");
             }
         }else {
             return new Results(0, "非法访问");
