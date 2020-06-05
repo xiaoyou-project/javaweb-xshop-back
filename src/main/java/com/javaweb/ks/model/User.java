@@ -12,7 +12,7 @@ public class User {
     private String username;
     private String nickname;
     private String password;
-    private String avatar;
+    private String avatar; // 图片的id
     private String sign;
     private String site;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

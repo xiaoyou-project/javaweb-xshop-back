@@ -45,7 +45,7 @@ public class ShopServiceImpl implements ShopService {
         List<Carousel> carousels = shopDao.getCarouselList(type); // 获取某种商品列表的最上面的轮播图
         String carousel = ""; // 存储轮播图的图片
         if(carousels.size() < 1){
-            carousel = "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1681245773,85554886&fm=26&gp=0.jpg"; // 轮播图中没有图片，则随便放一张
+            carousel = ""; // 轮播图中没有图片，则随便放一张
         }else {
             for(int i = 0; i < carousels.size(); i ++){ // 拼接图片
                 if(i == 0){
