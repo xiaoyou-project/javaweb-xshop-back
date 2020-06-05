@@ -17,6 +17,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 @Controller
 @Slf4j
@@ -37,16 +38,17 @@ public class PicController {
         log.info("用户token："+ token);
         log.info("图片：" + uploadedImageFile);
         log.info("路径" + (ResourceUtils.getURL("classpath:").getPath()+"static/img")); // 上传图片到static目录下
+        String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase(); // 获取唯一的uuid
         if(tokenVerify.tokenVerify(userID, token)) {
             //  userService.userList(page,rows,example);
             File imageFolder = new File((ResourceUtils.getURL("classpath:").getPath()+"static/img")); // 获取要上传图片的目录
-            File file = new File(imageFolder, userID + ".jpg"); // new一个图片文件
+            File file = new File(imageFolder, uuid + ".jpg"); // new一个图片文件
             if (!file.getParentFile().exists())
                 file.getParentFile().mkdirs();
             uploadedImageFile.getImage().transferTo(file);
             BufferedImage img = ImageUtil.change2jpg(file);
             ImageIO.write(img, "jpg", file);
-            return picService.add(Integer.toString(userID), userID); // 添加图片
+            return picService.add(uuid, userID); // 添加图片
         }else {
             return new Results(0, "非法访问");
         }

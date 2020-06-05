@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.UUID;
+
 
 @SpringBootTest
 class KsApplicationTests {
@@ -18,6 +20,6 @@ class KsApplicationTests {
 
 	@Test
 	void contextLoads() {
-		System.out.println(tokenVerify.tokenVerify(4, "d2f127cfe5f028325bd1324ab4029a03"));
+		System.out.println( UUID.randomUUID().toString().replace("-", "").toLowerCase());
 	}
 }

@@ -18,8 +18,8 @@ public class PicServiceImpl implements PicService {
 
     // 上传图片
     @Override
-    public Results add(String avatar, int userID) {
-        picDao.add(avatar, userID);
+    public Results add(String uuid, int userID) {
+        picDao.add(uuid, userID);
         return new Results(1, "上传成功");
     }
 

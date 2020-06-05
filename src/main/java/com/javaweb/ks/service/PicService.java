@@ -5,7 +5,7 @@ import com.javaweb.ks.result.Results;
 public interface PicService {
 
     // 上传图片
-    Results add(String avatar, int userID);
+    Results add(String uuid, int userID);
 
 
 }
