@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>用户中心--layui后台管理模板 2.0</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="../../css/public.css" media="all" />
+    <style>
+        .layui-table-cell{
+            height: 50px;
+        }
+        .my-shop{
+            height: 45px;
+        }
+        .shop-price{
+            color: #ff6700;
+        }
+    </style>
+</head>
+<body class="childrenBody">
+<form class="layui-form">
+    <table id="userList" lay-filter="userList"></table>
+</form>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script>
+    layui.use(['form','layer','table','laytpl'],function(){
+        var form = layui.form,
+            layer = parent.layer === undefined ? layui.layer : top.layer,
+            $ = layui.jquery,
+            laytpl = layui.laytpl,
+            table = layui.table;
+
+        //用户列表
+        var tableIns = table.render({
+            elem: '#userList',
+            url : '/api/v1/admin/getAllCart',
+            cellMinWidth : 95,
+            page : true,
+            height : "full-125",
+            limits : [10,15,20,25],
+            limit : 20,
+            id : "userListTable",
+            cols : [[
+                {type: "checkbox", fixed:"left", width:50},
+                {field: 'nickname', title: '用户昵称', minWidth:100, align:"center"},
+                {field: 'shopName', title: '商品名字', align:'center'},
+                {field: 'img', title: '商品图片',height: 50, minWidth:200, align:'center',templet:function(d){
+                        return '<img class="my-shop" src="'+d.img.split('&&')[0]+'">';
+                    }},
+                {field: 'price', title: '价格', align:'center',templet:function (d) {
+                        return '<span class="shop-price">'+d.price+'元</span>';
+                    }},
+                {field: 'count', title: '数量',  align:'center'}
+            ]]
+        });
+
+        //添加用户
+        function addUser(edit){
+            console.log(edit)
+            var index = layui.layer.open({
+                title : "修改用户",
+                type : 2,
+                content : "userAdd.html",
+                success : function(layero, index){
+                    var body = layui.layer.getChildFrame('body', index);
+                    if(edit){
+                        body.find("#username").val(edit.username);  //登录名
+                        body.find("#password").val(edit.password);  //邮箱
+                        body.find("#nickname").val(edit.nickname);  //性别
+                        body.find("#avatar").val(edit.avatar);  //会员等级
+                        body.find("#sign").val(edit.sign);    //用户状态
+                        body.find("#site").val(edit.site);    //用户简介
+                        body.find("#id").val(edit.id);    //用户简介
+                        form.render();
+                    }
+                    setTimeout(function(){
+                        layui.layer.tips('点击此处返回用户列表', '.layui-layer-setwin .layui-layer-close', {
+                            tips: 3
+                        });
+                    },500)
+                }
+            });
+
+            layui.layer.full(index);
+            window.sessionStorage.setItem("index",index);
+            //改变窗口大小时，重置弹窗的宽高，防止超出可视区域（如F12调出debug的操作）
+            $(window).on("resize",function(){
+                layui.layer.full(window.sessionStorage.getItem("index"));
+            })
+        }
+        $(".addNews_btn").click(function(){
+            layui.layer.open({
+                title:"添加用户",
+                type:2,
+                content:"addUser.html",
+                area:['500px','300px']
+            })
+        });
+
+        //批量删除
+        $(".delAll_btn").click(function(){
+            var checkStatus = table.checkStatus('userListTable'),
+                data = checkStatus.data,
+                newsId = [];
+            if(data.length > 0) {
+                for (var i in data) {
+                    newsId.push(data[i].id);
+                }
+                let latId=data[data.length-1].id;
+                layer.confirm('确定删除选中的用户？', {icon: 3, title: '提示'}, function (index) {
+                    for (let i in newsId){
+                        let id=data[i].id;
+                        $.post("/api/v1/admin/deleteUser",{userID:id},function (resposne) {
+                            if(resposne.code===1){
+                                layer.msg("删除id:"+id+"成功");
+                                //判断一下是否是最后一个
+                                if(id===latId){
+                                    tableIns.reload();
+                                    layer.close(index);
+                                }
+                            }else{
+                                layer.msg("删除失败!");
+                            }
+                        })
+                    }
+                })
+            }else{
+                layer.msg("请选择需要删除的用户");
+            }
+        })
+
+        //列表操作
+        table.on('tool(userList)', function(obj){
+            var layEvent = obj.event,
+                data = obj.data;
+            if(layEvent === 'edit'){ //编辑
+                addUser(data);
+            }else if(layEvent === 'del'){ //删除
+                layer.confirm('确定删除此用户？',{icon:3, title:'提示信息'},function(index){
+                    $.post("/api/v1/admin/deleteUser",{userID:data.id},function (resposne) {
+                        if(resposne.code===1){
+                            layer.msg("删除成功");
+                            tableIns.reload();
+                            layer.close(index);
+                        }else{
+                            layer.msg("删除失败!");
+                        }
+                    })
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>

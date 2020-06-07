@@ -1,6 +1,7 @@
 package com.javaweb.ks.service;
 
 import com.javaweb.ks.model.Shop;
+import com.javaweb.ks.model.User;
 import com.javaweb.ks.result.AdminResults;
 import com.javaweb.ks.result.Results;
 
@@ -38,4 +39,7 @@ public interface AdminService {
 
     // 修改管理员密码
     Results changePassword(String oldPassword, String newPassword);
+
+    // 修改用户信息
+    Results changeUserInfo(User user);
 }

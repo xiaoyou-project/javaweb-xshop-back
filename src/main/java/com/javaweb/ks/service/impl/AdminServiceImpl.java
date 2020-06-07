@@ -1,8 +1,10 @@
 package com.javaweb.ks.service.impl;
 
 import com.javaweb.ks.dao.AdminDao;
+import com.javaweb.ks.dao.UserDao;
 import com.javaweb.ks.dto.IndexPage;
 import com.javaweb.ks.model.Shop;
+import com.javaweb.ks.model.User;
 import com.javaweb.ks.result.AdminResults;
 import com.javaweb.ks.result.Results;
 import com.javaweb.ks.service.AdminService;
@@ -19,6 +21,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private AdminDao adminDao;
+
+    @Autowired
+    private UserDao userDao;
 
     // 管理员登录
     @Override
@@ -105,6 +110,13 @@ public class AdminServiceImpl implements AdminService {
         }else {
             return new Results(0, "旧密码不正确");
         }
+    }
+
+    // 修改用户信息
+    @Override
+    public Results changeUserInfo(User user) {
+        userDao.changeUserInfo(user);
+        return new Results(1, "修改用户信息成功");
     }
 
 }

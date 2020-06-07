@@ -55,7 +55,7 @@ public class AdminController {
     @ResponseBody
     public Results changeInfo(int userID, User user){
         user.setID(userID);
-        return userService.changeUserInfo(user);
+        return adminService.changeUserInfo(user);
     }
 
     // 删除用户

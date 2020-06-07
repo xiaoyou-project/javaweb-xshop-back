@@ -24,19 +24,9 @@
         <label for="password">密码</label>
         <input type="password" placeholder="请输入密码" autocomplete="off" id="password" class="layui-input" lay-verify="required">
     </div>
-<!--    <div class="layui-form-item input-item" id="imgCode">-->
-<!--        <label for="code">验证码</label>-->
-<!--        <input type="text" placeholder="请输入验证码" autocomplete="off" id="code" class="layui-input">-->
-<!--        <img src="../../images/code.jpg">-->
-<!--    </div>-->
     <div class="layui-form-item">
         <button class="layui-btn layui-block" lay-filter="login" lay-submit>登录</button>
     </div>
-<!--    <div class="layui-form-item layui-row">-->
-<!--        <a href="javascript:;" class="seraph icon-qq layui-col-xs4 layui-col-sm4 layui-col-md4 layui-col-lg4"></a>-->
-<!--        <a href="javascript:;" class="seraph icon-wechat layui-col-xs4 layui-col-sm4 layui-col-md4 layui-col-lg4"></a>-->
-<!--        <a href="javascript:;" class="seraph icon-sina layui-col-xs4 layui-col-sm4 layui-col-md4 layui-col-lg4"></a>-->
-<!--    </div>-->
 </form>
 <script type="text/javascript" src="../../layui/layui.js"></script>
 <script type="text/javascript">
@@ -45,18 +35,28 @@
             layer = parent.layer === undefined ? layui.layer : top.layer
         $ = layui.jquery;
 
-        $(".loginBody .seraph").click(function(){
-            layer.msg("这只是做个样式，至于功能，你见过哪个后台能这样登录的？还是老老实实的找管理员去注册吧",{
-                time:5000
-            });
-        })
-
         //登录按钮
-        form.on("submit(login)",function(data){
+        form.on("submit(login)",function(item){
             $(this).text("登录中...").attr("disabled","disabled").addClass("layui-disabled");
-            setTimeout(function(){
-                window.location.href = "/layuicms2.0";
-            },1000);
+            let data = {username:$("#userName").val(),password:$("#password").val()};
+            let that =this;
+            //发送Ajax请求
+            $.ajax({
+                url:"/api/v1/admin/login",
+                data:data,
+                type:"post",
+                success:function (data) {
+                    if(data.code===0){
+                        layer.alert('账号或密码错误', {icon: 2});
+                        $(that).text("登录").removeAttr("disabled").removeClass("layui-disabled");
+                    }else{
+                        layer.alert('登录成功', {icon: 1,
+                        success:function () {
+                            window.location.replace('/admin.html')
+                        }});
+                    }
+                }
+            });
             return false;
         })
 

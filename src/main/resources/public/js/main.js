@@ -95,4 +95,10 @@ layui.use(['form','element','layer','jquery'],function(){
         $(".outIcons span").text(data.split(".icon-").length-1);
     })
 
+    //获取主页信息
+    $.get("/api/v1/admin/getIndex",{},function (response) {
+        $("#shopNum").text(response.data.shop)
+        $("#userNum").text(response.data.user)
+    });
+
 })

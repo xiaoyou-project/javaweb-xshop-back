@@ -12,7 +12,7 @@ import java.util.List;
 public interface AdminDao {
 
     // 获取管理员的密码
-    @Select("select password form admin where username = #{username} ")
+    @Select("select password from admin where username = #{username} ")
     String getAdminPass(String username);
 
     // 获取所有用户信息，同时分页

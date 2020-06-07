@@ -8,22 +8,33 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
 
     //添加验证规则
     form.verify({
-        oldPwd : function(value, item){
-            if(value != "123456"){
-                return "密码错误，请重新输入！";
-            }
-        },
-        newPwd : function(value, item){
-            if(value.length < 6){
-                return "密码长度不能小于6位";
-            }
-        },
         confirmPwd : function(value, item){
-            if(!new RegExp($("#oldPwd").val()).test(value)){
+            if(!new RegExp($("#newPassword").val()).test(value)){
                 return "两次输入密码不一致，请重新输入！";
             }
         }
-    })
+    });
+
+
+    //点击修改密码
+    form.on('submit(changePwd)',function (e) {
+        var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
+        let data = {oldPassword:$("#oldPassword").val(),newPassword:$("#newPassword").val()};
+        console.log(data)
+        //发送post请求
+        $.post("/api/v1/admin/changePassword",data,function (response) {
+           if (response.code===1){
+               top.layer.msg("密码修改成功,请重新登录!",{icon:1});
+               setTimeout(function () {
+                   parent.window.location.replace("/")
+               },2000);
+           }else{
+               top.layer.msg(response.msg)
+           }
+        });
+        return false;
+    });
+
 
     //用户等级
     table.render({

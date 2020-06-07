@@ -13,92 +13,70 @@
 	<link rel="stylesheet" href="../../css/public.css" media="all" />
 </head>
 <body class="childrenBody">
-<form class="layui-form layui-row layui-col-space10">
-	<div class="layui-col-md9 layui-col-xs12">
-		<div class="layui-row layui-col-space10">
-			<div class="layui-col-md9 layui-col-xs7">
-				<div class="layui-form-item magt3">
-					<label class="layui-form-label">文章标题</label>
-					<div class="layui-input-block">
-						<input type="text" class="layui-input newsName" lay-verify="newsName" placeholder="请输入文章标题">
-					</div>
-				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label">内容摘要</label>
-					<div class="layui-input-block">
-						<textarea placeholder="请输入内容摘要" class="layui-textarea abstract"></textarea>
-					</div>
-				</div>
-			</div>
-			<div class="layui-col-md3 layui-col-xs5">
-				<div class="layui-upload-list thumbBox mag0 magt3">
-					<img class="layui-upload-img thumbImg">
-				</div>
-			</div>
+<input id="inputValue" value="none" style="display: none" />
+<form class="layui-form" style="width:80%;">
+	<div class="layui-form-item layui-row layui-col-xs12">
+		<label class="layui-form-label">商品名字</label>
+		<div class="layui-input-block">
+			<input type="text" name="shopName" class="layui-input shopName" lay-verify="required" placeholder="商品名字">
 		</div>
-		<div class="layui-form-item magb0">
-			<label class="layui-form-label">文章内容</label>
+	</div>
+	<div class="layui-form-item layui-row layui-col-xs12">
+		<label class="layui-form-label">现价</label>
+		<div class="layui-input-block">
+			<input type="text" name="price" class="layui-input price" lay-verify="required" placeholder="现价">
+		</div>
+	</div>
+	<div class="layui-form-item layui-row layui-col-xs12">
+		<label class="layui-form-label">原价</label>
+		<div class="layui-input-block">
+			<input type="text" name="oldPrice" class="layui-input oldPrice" lay-verify="required" placeholder="原价">
+		</div>
+	</div>
+	<div class="layui-form-item layui-row layui-col-xs12">
+		<label class="layui-form-label">描述</label>
+		<div class="layui-input-block">
+			<input type="text" name="description" class="layui-input description" lay-verify="required" placeholder="描述">
+		</div>
+	</div>
+	<div class="layui-form-item layui-row layui-col-xs12">
+		<label class="layui-form-label">图片</label>
+		<div class="layui-input-block">
+			<input type="text" name="img" class="layui-input img" lay-verify="required" placeholder="图片">
+		</div>
+	</div>
+	<div class="layui-form-item layui-row layui-col-xs12">
+		<div class="magb15 layui-col-md4 layui-col-xs12">
+			<label class="layui-form-label">类别</label>
 			<div class="layui-input-block">
-				<textarea class="layui-textarea layui-hide" name="content" lay-verify="content" id="news_content"></textarea>
+				<select name="sort" class="sort" lay-filter="userGrade">
+					<option value="1">手机电话卡</option>
+					<option value="2">电视盒子</option>
+					<option value="3">笔记本，显示器，平板</option>
+					<option value="4">家电插线板 </option>
+					<option value="5">出行穿戴</option>
+					<option value="6">智能 路由器</option>
+					<option value="7">电源 配件</option>
+					<option value="8">健康 儿童</option>
+					<option value="9">耳机 音响</option>
+					<option value="10">生活 箱包</option>
+				</select>
 			</div>
 		</div>
 	</div>
-	<div class="layui-col-md3 layui-col-xs12">
-		<blockquote class="layui-elem-quote title"><i class="seraph icon-caidan"></i> 分类目录</blockquote>
-		<div class="border category">
-			<div class="">
-				<p><input type="checkbox" name="news" title="新闻" lay-skin="primary" /></p>
-				<p><input type="checkbox" name="goods" title="商品" lay-skin="primary" /></p>
-				<p><input type="checkbox" name="notice" title="公告" lay-skin="primary" /></p>
-				<p><input type="checkbox" name="images" title="图片" lay-skin="primary" /></p>
-			</div>
+	<div class="layui-form-item layui-row layui-col-xs12">
+		<label class="layui-form-label">其它</label>
+		<div class="layui-input-block">
+			<input type="text" name="other" class="layui-input other" lay-verify="required" placeholder="其它描述">
 		</div>
-		<blockquote class="layui-elem-quote title magt10"><i class="layui-icon">&#xe609;</i> 发布</blockquote>
-		<div class="border">
-			<div class="layui-form-item">
-				<label class="layui-form-label"><i class="layui-icon">&#xe60e;</i> 状　态</label>
-				<div class="layui-input-block newsStatus">
-					<select name="status" lay-verify="required">
-						<option value="0">保存草稿</option>
-						<option value="1">等待审核</option>
-					</select>
-				</div>
-			</div>
-			<div class="layui-form-item">
-				<label class="layui-form-label"><i class="layui-icon">&#xe609;</i> 发　布</label>
-				<div class="layui-input-block">
-					<input type="radio" name="release" title="立即发布" lay-skin="primary" lay-filter="release" checked />
-					<input type="radio" name="release" title="定时发布" lay-skin="primary" lay-filter="release" />
-				</div>
-			</div>
-			<div class="layui-form-item layui-hide releaseDate">
-				<label class="layui-form-label"></label>
-				<div class="layui-input-block">
-					<input type="text" class="layui-input" id="release" placeholder="请选择日期和时间" readonly />
-				</div>
-			</div>
-			<div class="layui-form-item openness">
-				<label class="layui-form-label"><i class="seraph icon-look"></i> 公开度</label>
-				<div class="layui-input-block">
-					<input type="radio" name="openness" title="开放浏览" lay-skin="primary" checked />
-					<input type="radio" name="openness" title="私密浏览" lay-skin="primary" />
-				</div>
-			</div>
-			<div class="layui-form-item newsTop">
-				<label class="layui-form-label"><i class="seraph icon-zhiding"></i> 置　顶</label>
-				<div class="layui-input-block">
-					<input type="checkbox" name="newsTop" lay-skin="switch" lay-text="是|否">
-				</div>
-			</div>
-			<hr class="layui-bg-gray" />
-			<div class="layui-right">
-				<a class="layui-btn layui-btn-sm" lay-filter="addNews" lay-submit><i class="layui-icon">&#xe609;</i>发布</a>
-				<a class="layui-btn layui-btn-primary layui-btn-sm" lay-filter="look" lay-submit>预览</a>
-			</div>
+	</div>
+	<div class="layui-form-item layui-row layui-col-xs12">
+		<div class="layui-input-block">
+			<button class="layui-btn layui-btn-sm" lay-submit="" lay-filter="addUser">保存</button>
 		</div>
 	</div>
 </form>
 <script type="text/javascript" src="../../layui/layui.js"></script>
-<script type="text/javascript" src="newsAdd.js"></script>
+<script type="text/javascript" src="./newsAdd.js"></script>
 </body>
 </html>
