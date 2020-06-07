@@ -27,7 +27,7 @@
                 other = #{other},
             </if>
         </set>
-        where t.ID = #{shopID}
+        where t.ID = #{ID}
     </update>
 
 </mapper>
