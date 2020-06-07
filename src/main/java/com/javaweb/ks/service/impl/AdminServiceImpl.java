@@ -7,9 +7,14 @@ import com.javaweb.ks.result.AdminResults;
 import com.javaweb.ks.result.Results;
 import com.javaweb.ks.service.AdminService;
 import com.javaweb.ks.util.MD5;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-
+@Service
+@Transactional
+@Slf4j
 public class AdminServiceImpl implements AdminService {
 
     @Autowired
