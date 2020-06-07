@@ -1,7 +1,7 @@
 {
 	"cmsName": "layuiCMS后台管理模版",
 	"version": "v2.0",
-	"author": "小游",
+	"author": "小游 葛昊",
 	"homePage": "index.html",
 	"server": "linux",
 	"dataBase": "8.00.2039",

@@ -88,7 +88,7 @@ public class AdminController {
     }
 
     // 删除商品
-    @GetMapping("/deleteShop")
+    @PostMapping("/deleteShop")
     @ResponseBody
     public Results deleteShop(int shopID){
         return adminService.deleteShop(shopID);
