@@ -15,6 +15,8 @@ public class ShopCart {
     private String img;
     private String shopName;
     private int price;
+    private int oldPrice;
     private int count;
+    private String nickname;
 
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javaweb.ks.dao.AdminDao">
+
+    <update id="changeShopInform">
+        update shop t
+        <set>
+            <if test=" name != null">
+                name = #{name},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="oldPrice != null">
+                old_price = #{oldPrice},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            <if test="img != null">
+                img = #{img},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            <if test="other != null">
+                other = #{other},
+            </if>
+        </set>
+        where t.ID = #{shopID}
+    </update>
+
+</mapper>
